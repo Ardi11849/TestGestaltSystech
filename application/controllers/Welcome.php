@@ -129,6 +129,12 @@ class Welcome extends CI_Controller {
 		echo json_encode($rent);
 	}
 
+	public function getRentFilter()
+	{
+		$rent = $this->Welcome_m->getRentFilter();
+		echo json_encode($rent);
+	}
+
 	public function insertRent()
 	{
 		echo $this->Welcome_m->insertRent($this->input->post());

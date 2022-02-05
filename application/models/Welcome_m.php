@@ -72,7 +72,18 @@ class Welcome_m extends CI_Model {
 	public function getRent()
 	{
 		$rent = [];
-		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, count(Rent_id) as count_book FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND r.Customer_id = c.Customer_id GROUP BY r.Book_id')->result_array();
+		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, count(r.Rent_id) as count_rent FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND r.Customer_id = c.Customer_id GROUP BY r.Book_id')->result_array();
+		$count = $this->db->count_all('rent');
+		$rent['draw'] = $this->input->post('draw');
+		$rent['recordsTotal'] = $count;
+		$rent['recordsFiltered'] = $count;
+		return $rent;
+	}
+
+	public function getRentFilter()
+	{
+		$rent = [];
+		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, count(r.Rent_id) as count_rent FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND r.Customer_id = c.Customer_id GROUP BY r.Book_id HAVING count(r.Rent_id) > 1')->result_array();
 		$count = $this->db->count_all('rent');
 		$rent['draw'] = $this->input->post('draw');
 		$rent['recordsTotal'] = $count;

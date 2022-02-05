@@ -241,6 +241,18 @@
 	            	$("#form-rent").show('show');
 	            }
 	        },
+          {
+              text: 'filter rent than more 10',
+              action: function ( e, dt, node, config ) {
+                $('#tableRent').DataTable().ajax.url('<?php echo base_url()?>Welcome/getRentFilter').load();
+              }
+          },
+          {
+              text: 'show all',
+              action: function ( e, dt, node, config ) {
+                $('#tableRent').DataTable().ajax.url('<?php echo base_url()?>Welcome/getRent').load();
+              }
+          },
             'pageLength',
         ],
         processing: true,
