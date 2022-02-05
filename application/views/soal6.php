@@ -105,6 +105,7 @@
 			</form>
 			<table id="tableRent" class="table table-stripped">
 				<thead>
+					<th>No</th>
 					<th>Rent Id</th>
 					<th>Name Customer</th>
 					<th>Title Book</th>

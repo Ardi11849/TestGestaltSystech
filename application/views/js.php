@@ -285,10 +285,9 @@
           },
           { data: 'rent_id' },
           { data: 'customer' },
-          { data: 'title'},
-          { 
-            data: 'count_book'
-          }
+          { data: 'title' },
+          { data: 'count_book' },
+          { data: 'count_rent' }
         ]
       });
     };
