@@ -72,7 +72,7 @@ class Welcome_m extends CI_Model {
 	public function getRent()
 	{
 		$rent = [];
-		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, count(r.Rent_id) as count_rent FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND r.Customer_id = c.Customer_id GROUP BY r.Book_id')->result_array();
+		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, (SELECT count(r2.Rent_id) FROM rent as r2 WHERE r2.Customer_id = r.Customer_id) as count_rent FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND r.Customer_id = c.Customer_id GROUP BY r.Book_id, r.Customer_id')->result_array();
 		$count = $this->db->count_all('rent');
 		$rent['draw'] = $this->input->post('draw');
 		$rent['recordsTotal'] = $count;
@@ -83,7 +83,7 @@ class Welcome_m extends CI_Model {
 	public function getRentFilter()
 	{
 		$rent = [];
-		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, count(r.Rent_id) as count_rent FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND r.Customer_id = c.Customer_id GROUP BY r.Book_id HAVING count(r.Rent_id) > 10')->result_array();
+		$rent['data'] = $this->db->query('SELECT r.Rent_id as rent_id, c.Name as customer, b.Title as title, count(r.Book_id) as count_book, (SELECT count(r2.Rent_id) FROM rent as r2 WHERE r2.Customer_id = r.Customer_id) as count_rent FROM rent as r, buku as b, customer as c WHERE r.Book_id = b.Book_id AND (SELECT count(r2.Rent_id) FROM rent as r2 WHERE r2.Customer_id = r.Customer_id) >= 10 AND r.Customer_id = c.Customer_id GROUP BY r.Book_id, r.Customer_id')->result_array();
 		$count = $this->db->count_all('rent');
 		$rent['draw'] = $this->input->post('draw');
 		$rent['recordsTotal'] = $count;
